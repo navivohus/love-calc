@@ -7,204 +7,93 @@
   <script src="https://telegram.org"></script>
   <link href="https://googleapis.com" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
     body {
-      margin: 0;
-      padding: 16px 12px 20px;
-      background-color: #FFF0F5;
+      margin: 0; padding: 16px 12px 20px; background-color: #FFF0F5;
       font-family: 'Marck Script', 'Segoe Script', cursive;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 100vh;
-      overflow: hidden;
+      display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+      min-height: 100vh; overflow: hidden;
     }
-
     .title {
-      width: 100%;
-      max-width: 390px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      color: #C9184A;
-      font-size: 32px;
-      font-weight: bold;
-      text-align: center;
-      margin: 6px auto 14px;
-      line-height: 1;
+      width: 100%; max-width: 390px; display: flex; align-items: center; justify-content: center;
+      gap: 10px; color: #C9184A; font-size: 32px; font-weight: bold; margin: 6px auto 14px; line-height: 1;
     }
-
-    .title-heart {
-      width: 24px;
-      height: 24px;
-      fill: #E01E5A;
-      flex-shrink: 0;
-      transform: translateY(1px);
-    }
-
+    .title-heart { width: 24px; height: 24px; fill: #E01E5A; flex-shrink: 0; }
     .screen {
-      width: 100%;
-      max-width: 390px;
-      height: 82px;
-      background: #FFFFFF;
-      border: 2.5px solid #FF8FA3;
-      border-radius: 26px;
-      box-shadow: 0 5px 0 #F4B8C8;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 0 22px;
-      font-size: 36px;
-      color: #800F2F;
-      overflow-x: auto;
-      white-space: nowrap;
-      margin-bottom: 16px;
+      width: 100%; max-width: 390px; height: 82px; background: #FFFFFF;
+      border: 2.5px solid #FF8FA3; border-radius: 26px; box-shadow: 0 5px 0 #F4B8C8;
+      display: flex; align-items: center; justify-content: flex-end;
+      padding: 0 22px; font-size: 36px; color: #800F2F; overflow-x: auto; white-space: nowrap; margin-bottom: 16px;
     }
-
     .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      width: 100%;
-      max-width: 400px;
-      padding-bottom: 10px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+      width: 100%; max-width: 400px; padding-bottom: 10px;
     }
-
     .heart-btn {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.08s ease;
+      position: relative; width: 100%; aspect-ratio: 1 / 1; background: none; border: none; padding: 0;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.08s ease;
     }
-
-    .heart-btn:active {
-      transform: scale(0.92);
-    }
-
-    .heart-btn svg {
-      width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 4px 0 #F4B8C8);
-    }
-
+    .heart-btn:active { transform: scale(0.92); }
+    .heart-btn svg { width: 100%; height: 100%; filter: drop-shadow(0 4px 0 #F4B8C8); }
     .heart-btn span {
-      position: absolute;
-      top: 45%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: 'Marck Script', 'Segoe Script', cursive;
-      font-size: 17px;
-      font-weight: bold;
-      pointer-events: none;
-      white-space: nowrap;
+      position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
+      font-family: 'Marck Script', 'Segoe Script', cursive; font-size: 17px; font-weight: bold; pointer-events: none;
     }
-
-    .num svg path { fill: #FFC2D1; stroke: #FF8FA3; }
-    .num span { color: #590D22; }
-
-    .op svg path { fill: #FF8FA3; stroke: #FF4D6D; }
-    .op span { color: #FFFFFF; }
-
-    .clr svg path { fill: #FFE5EC; stroke: #FFB3C6; }
-    .clr span { color: #A4133C; }
-
-    .eq svg path { fill: #E01E5A; stroke: #A4133C; }
-    .eq span { color: #FFFFFF; }
+    .num svg path { fill: #FFC2D1; stroke: #FF8FA3; } .num span { color: #590D22; }
+    .op svg path { fill: #FF8FA3; stroke: #FF4D6D; } .op span { color: #FFFFFF; }
+    .clr svg path { fill: #FFE5EC; stroke: #FFB3C6; } .clr span { color: #A4133C; }
+    .eq svg path { fill: #E01E5A; stroke: #A4133C; } .eq span { color: #FFFFFF; }
   </style>
 </head>
 <body>
-
   <div class="title">
-    <svg class="title-heart" viewBox="0 0 100 95">
-      <path d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/>
-    </svg>
+    <svg class="title-heart" viewBox="0 0 100 95"><path d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg>
     <span>For My Love</span>
-    <svg class="title-heart" viewBox="0 0 100 95">
-      <path d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/>
-    </svg>
+    <svg class="title-heart" viewBox="0 0 100 95"><path d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg>
   </div>
 
   <div class="screen" id="display"></div>
 
-  <div class="grid" id="buttons-grid"></div>
+  <div class="grid">
+    <button class="heart-btn num" onclick="press('7')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>seven</span></button>
+    <button class="heart-btn num" onclick="press('8')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>eight</span></button>
+    <button class="heart-btn num" onclick="press('9')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>nine</span></button>
+    <button class="heart-btn op" onclick="press('/')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>divide</span></button><button class="heart-btn num" onclick="press('4')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>four</span></button>
+    <button class="heart-btn num" onclick="press('5')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>five</span></button>
+    <button class="heart-btn num" onclick="press('6')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>six</span></button>
+    <button class="heart-btn op" onclick="press('*')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>times</span></button>
+
+    <button class="heart-btn num" onclick="press('1')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>one</span></button>
+    <button class="heart-btn num" onclick="press('2')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>two</span></button>
+    <button class="heart-btn num" onclick="press('3')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>three</span></button>
+    <button class="heart-btn op" onclick="press('-')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>minus</span></button>
+
+    <button class="heart-btn clr" onclick="press('C')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>clear</span></button>
+    <button class="heart-btn num" onclick="press('0')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>zero</span></button>
+    <button class="heart-btn eq" onclick="press('=')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>equals</span></button>
+    <button class="heart-btn op" onclick="press('+')"><svg viewBox="0 0 100 95"><path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/></svg><span>plus</span></button>
+  </div>
 
   <script>
     const tg = window.Telegram?.WebApp;
-    if (tg) {
-      tg.ready();
-      tg.expand();
-      tg.setHeaderColor('#FFF0F5');
-      tg.setBackgroundColor('#FFF0F5');
-    }
-
-    let expression = "";
-    const displayEl = document.getElementById("display");
-
-    const buttons = [
-      { label: 'seven', val: '7', type: 'num' }, { label: 'eight',  val: '8', type: 'num' }, { label: 'nine',   val: '9', type: 'num' }, { label: 'divide', val: '/', type: 'op' },
-{ label: 'four',  val: '4', type: 'num' }, { label: 'five',   val: '5', type: 'num' }, { label: 'six',    val: '6', type: 'num' }, { label: 'times',  val: '*', type: 'op' },
-      { label: 'one',   val: '1', type: 'num' }, { label: 'two',    val: '2', type: 'num' }, { label: 'three',  val: '3', type: 'num' }, { label: 'minus',  val: '-', type: 'op' },
-      { label: 'clear', val: 'C', type: 'clr' }, { label: 'zero',   val: '0', type: 'num' }, { label: 'equals', val: '=', type: 'eq'  }, { label: 'plus',   val: '+', type: 'op' }
-    ];
-
-    const heartSVG = 
-      <svg viewBox="0 0 100 95">
-        <path stroke-width="2.5" d="M50 86 C50 86 8 60 8 30 C8 14 21 6 34 6 C42 6 47 11 50 16 C53 11 58 6 66 6 C79 6 92 14 92 30 C92 60 50 86 50 86 Z"/>
-      </svg>
-    ;
-
-    function updateDisplay(text) {
-      displayEl.textContent = text.replace(/\*/g, '×').replace(/\//g, '÷');
-    }
-
-    function handlePress(val) {
-      if (tg?.HapticFeedback) {
-        tg.HapticFeedback.impactOccurred('light');
-      }
-
-      if (val === 'C') {
-        expression = "";
-        updateDisplay("");
-      } else if (val === '=') {
+    if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor('#FFF0F5'); tg.setBackgroundColor('#FFF0F5'); }
+    let expr = "";
+    const disp = document.getElementById("display");
+    function press(v) {
+      if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+      if (v === 'C') { expr = ""; disp.textContent = ""; }
+      else if (v === '=') {
         try {
-          if (!expression) return;
-          let res = Function('"use strict";return (' + expression + ')')();
-          if (!isFinite(res)) throw new Error();
-          res = Math.round(res * 1000000) / 1000000;
-          expression = String(res);
-          updateDisplay(expression);
-        } catch {
-          expression = "";
-          updateDisplay("Error ♥️");
-        }
+          if (!expr) return;
+          let r = Math.round(Function('return (' + expr + ')')() * 1000000) / 1000000;
+          if (!isFinite(r)) throw 1;
+          expr = String(r); disp.textContent = expr;
+        } catch { expr = ""; disp.textContent = "Error ♥️"; }
       } else {
-        expression += val;
-        updateDisplay(expression);
+        expr += v;
+        disp.textContent = expr.replace(/\*/g, '×').replace(/\//g, '÷');
       }
     }
-
-    const grid = document.getElementById("buttons-grid");
-    buttons.forEach(btn => {
-      const el = document.createElement("button");
-      el.className = heart-btn ${btn.type};
-      el.innerHTML = ${heartSVG}<span>${btn.label}</span>;
-      el.addEventListener("click", () => handlePress(btn.val));
-      grid.appendChild(el);
-    });
   </script>
 </body>
 </html>
